@@ -25,20 +25,21 @@ Run the script using the following options:
 
 usage: orthofp.py [-h] [--xplane XPLANE] [--flightplan FLIGHTPLAN] [--source SOURCE] [--zl {12,13,14,15,16,17,18}] [--padding PADDING] [--basedir BASEDIR] [--osm] [--mesh] [--mask] [--dsf] [--deldsf] [--ovl] [--all]
 
-optional arguments:
-  -h, --help            show this help message and exit
-  --xplane XPLANE       X-Plane installation directory
-  --flightplan FLIGHTPLAN
-                        Flight plan fms file. Checks current directory then x-plane "Output/FMS plans" directory if no path is included
-  --source SOURCE       Source for photos e.g. BI, GO2, EUR etc
-  --zl {12,13,14,15,16,17,18}
-                        Zoom level for tiles
-  --padding PADDING     Padding to use for tiles either side of flight plan. Integer greater than or equal to 0. Default: 0
-  --basedir BASEDIR     Base directory for tiles. Must end with '/'. Default: ortho4xp/Tiles/
-  --osm                 Assemble vector data
-  --mesh                Triangulate 3D mesh
-  --mask                Draw water masks
-  --dsf                 Build imagery/DSF
-  --deldsf              Delete imagery/DSF for other sources and/or zoom levels
-  --ovl                 Extract overlays
-  --all                 Perform all actions except deldsf
+optional arguments:  
+  -h, --help            show this help message and exit  
+  --xplane XPLANE       X-Plane installation directory   
+  --flightplan FLIGHTPLAN  
+                        Flight plan fms file. Checks current directory then x-plane "Output/FMS plans" directory if no path is included  
+  --source SOURCE       Source for photos e.g. BI, GO2, EUR etc  
+  --zl {12,13,14,15,16,17,18}  
+                        Zoom level for tiles  
+  --padding PADDING     Padding to use for tiles either side of flight plan. Integer greater than or equal to 0. Default: 0  
+  --basedir BASEDIR     Base directory for tiles. Must end with '/'. Default: ortho4xp/Tiles/  
+  --osm                 Assemble vector data  
+  --mesh                Triangulate 3D mesh  
+  --mask                Draw water masks  
+  --dsf                 Build imagery/DSF  
+  --deldsf              Delete imagery/DSF for other sources and/or zoom levels  
+  --ovl                 Extract overlays  
+  --all                 Perform all actions except deldsf  
+  
