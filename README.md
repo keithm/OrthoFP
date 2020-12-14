@@ -42,4 +42,3 @@ optional arguments:
   --deldsf              Delete imagery/DSF for other sources and/or zoom levels  
   --ovl                 Extract overlays  
   --all                 Perform all actions except deldsf  
-  
