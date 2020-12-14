@@ -23,6 +23,7 @@ OFP_FP_Utils.py will be in the src directory.
 Open a terminal or command prompt and cd to the Otho4XP directory.
 Run the script using the following options:
 
+<pre>
 usage: orthofp.py [-h] [--xplane XPLANE] [--flightplan FLIGHTPLAN] [--source SOURCE] [--zl {12,13,14,15,16,17,18}] [--padding PADDING] [--basedir BASEDIR] [--osm] [--mesh] [--mask] [--dsf] [--deldsf] [--ovl] [--all]
 
 optional arguments:  
@@ -42,3 +43,4 @@ optional arguments:
   --deldsf              Delete imagery/DSF for other sources and/or zoom levels  
   --ovl                 Extract overlays  
   --all                 Perform all actions except deldsf  
+</pre>
