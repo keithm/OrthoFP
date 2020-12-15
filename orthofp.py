@@ -23,7 +23,7 @@ import OFP_FP_Utils as FP
 
 if __name__ == '__main__':
 
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(description="Reads a X-Plane flight plan file and uses Ortho4XP to build the tiles needed for the flight.", epilog="Each action is only performed if the tile doesn't exist or the --force option is used.")
     parser.add_argument("--xplane", help="X-Plane installation directory")
     parser.add_argument("--flightplan", help="Flight plan fms file. Checks current directory then x-plane \"Output/FMS plans\" directory if no path is included")
     parser.add_argument("--source", help="Source for photos e.g. BI, GO2, EUR etc")
@@ -37,6 +37,7 @@ if __name__ == '__main__':
     parser.add_argument("--deldsf", help="Delete imagery/DSF for other sources and/or zoom levels", action="store_true")
     parser.add_argument("--ovl", help="Extract overlays", action="store_true")
     parser.add_argument("--all", help="Perform all actions except deldsf", action="store_true")
+    parser.add_argument("--force", help="Perform the selected actions even if the tile exists", action="store_true")
 
     args = parser.parse_args()
 
@@ -92,23 +93,22 @@ if __name__ == '__main__':
     coords = fp.getCoords(args.padding)
     for idx, coord in enumerate(coords, start=1):
         print("Building tile " + str(idx) + " of " + str(len(coords)))
-        tile=CFG.Tile(coord[0],coord[1],args.basedir)
+        lat=coord[0]
+        lon=coord[1]
+        tile=CFG.Tile(lat,lon,args.basedir)
         tile.default_website=args.source
         tile.default_zl=args.zl
-        if args.deldsf:
-            texturedir = os.path.join(tile.build_dir, 'textures')
-            if os.path.isdir(texturedir):
-                for f in os.listdir(texturedir):
-                    if f.endswith('.dds') and not f.endswith(args.source + str(args.zl) + '.dds'):
-                        os.remove(os.path.join(texturedir, f))
-        if (args.osm or args.mesh or args.dsf or args.all): tile.make_dirs()
-        if args.osm or args.all: 
-            VMAP.build_poly_file(tile)
-        if args.mesh or args.all: 
-            MESH.build_mesh(tile)
-        if args.mask or args.all: 
-            MASK.build_masks(tile)
-        if args.dsf or args.all: 
-            TILE.build_tile(tile)
-        if args.ovl or args.all: 
+        if not os.path.isfile(os.path.join(tile.build_dir,'Earth nav data',FNAMES.long_latlon(tile.lat,tile.lon)+'.dsf')) or args.force:
+            if (args.osm or args.mesh or args.mask or args.dsf or args.ovl or args.all): tile.make_dirs()
+            if args.osm or args.all:
+                VMAP.build_poly_file(tile)
+            if args.mesh or args.all:
+                MESH.build_mesh(tile)
+            if args.mask or args.all:
+                MASK.build_masks(tile)
+            if args.dsf or args.all:
+                TILE.build_tile(tile)
+            if args.deldsf:
+                TILE.remove_unwanted_textures(tile)
+        if (args.ovl or args.all) and (not os.path.isfile(os.path.join(FNAMES.Overlay_dir,"Earth nav data",FNAMES.round_latlon(tile.lat,tile.lon),FNAMES.short_latlon(tile.lat,tile.lon)+'.dsf')) or args.force):
             OVL.build_overlay(coord[0],coord[1])
